@@ -1,6 +1,6 @@
 import React from 'react';
 import { Person } from '../types';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 type Props = {
   name: string | null;
@@ -8,6 +8,8 @@ type Props = {
 };
 
 export const PersonLink: React.FC<Props> = ({ name, peopleMap }) => {
+  const [searchParams] = useSearchParams();
+
   if (!name) {
     return <>-</>;
   }
@@ -21,7 +23,13 @@ export const PersonLink: React.FC<Props> = ({ name, peopleMap }) => {
   const linkClass = person.sex === 'f' ? 'has-text-danger' : '';
 
   return (
-    <Link to={`/people/${person.slug}`} className={linkClass}>
+    <Link
+      to={{
+        pathname: `/people/${person.slug}`,
+        search: `?${searchParams.toString()}`,
+      }}
+      className={linkClass}
+    >
       {person.name}
     </Link>
   );

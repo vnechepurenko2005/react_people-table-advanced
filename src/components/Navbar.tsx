@@ -3,7 +3,7 @@ import cn from 'classnames';
 import React from 'react';
 
 export const Navbar: React.FC = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   return (
     <nav
@@ -27,7 +27,10 @@ export const Navbar: React.FC = () => {
             className={cn('navbar-item', {
               'has-background-grey-lighter': pathname.startsWith('/people'),
             })}
-            to="/people"
+            to={{
+              pathname: '/people',
+              search: pathname.startsWith('/people') ? search : '',
+            }}
           >
             People
           </Link>
